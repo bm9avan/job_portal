@@ -5,6 +5,8 @@
 .App-logo {
   height: 40vmin;
   pointer-events: none;
+  width: 100%; /* Image takes full width */
+  object-fit: cover; /* Cover the container */
 }
 
 .App-header {
@@ -14,6 +16,8 @@
   align-items: center;
   justify-content: center;
   font-size: calc(10px + 2vmin);
+  overflow: hidden; /* Hide overflow */
+  position: relative; /* Position relative for further customization */
 }
 
 .heading{
@@ -22,4 +26,24 @@
 
 .App-link {
   color: #25768d;
+}
+
+/* App.css */
+
+.App-logo {
+  width: 200px;
+  height: 200px;
+  background-image: url('./bit-logo-small.png'); /* Default image */
+  background-size: cover; /* Ensure the image covers the div */
+  background-position: center;
+}
+
+/* Media query to switch image on smaller screens */
+@media (max-width: 500px) {
+  /* .App-logo {
+    background-image: url('./bit-logo-small.png'); 
+  } */
+  .heading {
+    font-size: 40px;
+  }
 }

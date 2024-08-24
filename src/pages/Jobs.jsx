@@ -4,16 +4,26 @@ import "./Jobs.css";
 
 const Jobs = () => {
   const [search, setSearch] = useState("");
-  const [data, setData] = useState([]);
+  const [clear, setClear] = useState(null);
+  const [data, setData] = useState("loading");
 
-  useEffect(() => {
+  function getAllJobsData() {
+    setData("loading");
+    setSearch("");
+    setClear(null);
     fetch(`${process.env.REACT_APP_URL}/get`)
       .then((v) => v.json())
       .then((v) => setData(v));
+  }
+
+  useEffect(() => {
+    getAllJobsData();
   }, []);
 
   function searchHandler(e) {
     e.preventDefault();
+    setClear("clear");
+    setData("loading");
     if (search.trim().length === 0) {
       return;
     }
@@ -21,6 +31,7 @@ const Jobs = () => {
       .then((v) => v.json())
       .then((v) => setData(v));
   }
+
   return (
     <>
       <p className="heading" style={{ marginBottom: "0px", fontSize: "45px" }}>
@@ -44,14 +55,25 @@ const Jobs = () => {
             required
           />
           <button type="submit">Search</button>
+          {search !== "" && clear && (
+            <button type="button" onClick={getAllJobsData}>
+              Clear
+            </button>
+          )}
         </form>
       </div>
       <div className="job-list">
-        {data.length ===0 ? <p className="heading" style={{ fontSize: "35px" }}>Search not found!</p>
-        :
-        data.map((job) => (
-          <Job key={job.id} job={job} />
-        ))}
+        {data === "loading" ? (
+          <p className="heading" style={{ fontSize: "35px" }}>
+            Loading...
+          </p>
+        ) : data.length === 0 ? (
+          <p className="heading" style={{ fontSize: "35px" }}>
+            Search not found!
+          </p>
+        ) : (
+          data.map((job) => <Job key={job.id} job={job} />)
+        )}
       </div>
     </>
   );

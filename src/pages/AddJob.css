@@ -16,7 +16,8 @@ form {
 input {
   margin: 3px;
   padding: 8px;
-  width: 100%;
+  /* width: 100%; */
+  width: 400px;
   border: 1px solid #ccc;
   border-radius: 5px;
 }
